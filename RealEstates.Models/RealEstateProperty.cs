@@ -33,6 +33,6 @@ namespace RealEstates.Models
 
         public int Price { get; set; }
 
-        public ICollection<RealEstatePropertyTag> Tags { get; set; }
+        public virtual ICollection<RealEstatePropertyTag> Tags { get; set; }
     }
 }
