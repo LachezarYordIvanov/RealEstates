@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RealEstates.Data;
+using System;
 
 namespace RealEstates.ConsoleApplication
 {
@@ -6,7 +7,10 @@ namespace RealEstates.ConsoleApplication
     {
         static void Main(string[] args)
         {
-            
+            var db = new RealEstateDbContext();
+
+            db.Database.EnsureCreated();
+
         }
     }
 }
