@@ -92,23 +92,18 @@ namespace RealEstates.Services
         
         public IEnumerable<PropertyViewModel> Search(int minYear, int maxYear, int minSize, int maxSize)
         {
-            throw new System.NotImplementedException();
+            return db.RealEstateProperties
+                .Where(x => x.Year >= minYear && x.Year <= maxYear && x.Size >= minSize && x.Size <= maxSize)
+                .Select(x => MapToPropertyViewModel(x))
+                .OrderBy(x => x.Price)
+                .ToList();
         }
-
+        
         public IEnumerable<PropertyViewModel> SearchByPrice(int minPrice, int maxPrice)
         {
             return this.db.RealEstateProperties
                 .Where(x => x.Price >= minPrice && x.Price <= maxPrice)
-                .Select(x => new PropertyViewModel
-                {
-                    Price = x.Price,
-                    Floor = (x.Floor ?? 0) + "/" + (x.TotalNumberOfFloors ?? 0),
-                    Size = x.Size,
-                    Year = x.Year,
-                    BuildingType = x.BuildingType.Name,
-                    District = x.District.Name,
-                    PropertyType = x.PropertyType.Name
-                })
+                .Select(x => MapToPropertyViewModel(x))
                 .OrderBy(x => x.Price)
                 .ToList();
         }
@@ -117,5 +112,20 @@ namespace RealEstates.Services
         {
             throw new System.NotImplementedException();
         }
+
+        private static PropertyViewModel MapToPropertyViewModel(RealEstateProperty x)
+        {
+            return new PropertyViewModel
+            {
+                Price = x.Price,
+                Floor = (x.Floor ?? 0) + "/" + (x.TotalNumberOfFloors ?? 0),
+                Size = x.Size,
+                Year = x.Year,
+                BuildingType = x.BuildingType.Name,
+                District = x.District.Name,
+                PropertyType = x.PropertyType.Name
+            };
+        }
+
     }
 }
