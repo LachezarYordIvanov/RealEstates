@@ -86,7 +86,7 @@ namespace RealEstates.Services
             this.db.RealEstateProperties.Add(property);
             this.db.SaveChanges();
 
-            this.UpdateTags(property.Id);
+            this.UpdateTags(property.Id);           
         }
 
         
@@ -97,7 +97,20 @@ namespace RealEstates.Services
 
         public IEnumerable<PropertyViewModel> SearchByPrice(int minPrice, int maxPrice)
         {
-            throw new System.NotImplementedException();
+            return this.db.RealEstateProperties
+                .Where(x => x.Price >= minPrice && x.Price <= maxPrice)
+                .Select(x => new PropertyViewModel
+                {
+                    Price = x.Price,
+                    Floor = (x.Floor ?? 0) + "/" + (x.TotalNumberOfFloors ?? 0),
+                    Size = x.Size,
+                    Year = x.Year,
+                    BuildingType = x.BuildingType.Name,
+                    District = x.District.Name,
+                    PropertyType = x.PropertyType.Name
+                })
+                .OrderBy(x => x.Price)
+                .ToList();
         }
 
         public void UpdateTags(int propertyId)
