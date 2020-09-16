@@ -1,5 +1,6 @@
-﻿using RealEstates.Data;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
+using RealEstates.Data;
+using RealEstates.Services;
 
 namespace RealEstates.ConsoleApplication
 {
@@ -9,7 +10,10 @@ namespace RealEstates.ConsoleApplication
         {
             var db = new RealEstateDbContext();
 
-            db.Database.EnsureCreated();
+            db.Database.Migrate();
+
+            var propertiesServise = new PropertiesService(db);
+            
 
         }
     }
