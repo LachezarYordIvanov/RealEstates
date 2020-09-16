@@ -16,7 +16,7 @@ namespace RealEstates.Services
         }
         public IEnumerable<DistrictViewModel> GetTopDistrictsByAveragePrice(int count = 10)
         {
-            return db.Districts.OrderByDescending(x => x.Properties.Average(x => x.Price))
+            return this.db.Districts.OrderByDescending(x => x.Properties.Average(x => x.Price))
                 .Select(x => MapToDistrictViewModel(x))
                 .Take(count)
                 .ToList();
@@ -26,7 +26,11 @@ namespace RealEstates.Services
 
         public IEnumerable<DistrictViewModel> GetTopDistrictsByNumberOfProperties(int count = 10)
         {
-            throw new System.NotImplementedException();
+            return this.db.Districts
+                .OrderByDescending(x => x.Properties.Count())
+                .Select(x => MapToDistrictViewModel(x))
+                .Take(count)
+                .ToList();
         }
 
         private static DistrictViewModel MapToDistrictViewModel(District x)
