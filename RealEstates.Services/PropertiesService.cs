@@ -2,6 +2,7 @@
 using RealEstates.Models;
 using RealEstates.Services.Models;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace RealEstates.Services
@@ -99,7 +100,16 @@ namespace RealEstates.Services
         {
             return db.RealEstateProperties
                 .Where(x => x.Year >= minYear && x.Year <= maxYear && x.Size >= minSize && x.Size <= maxSize)
-                .Select(x => MapToPropertyViewModel(x))
+                .Select(x => new PropertyViewModel
+                {
+                    Price = x.Price,
+                    Floor = (x.Floor ?? 0).ToString() + "/" + (x.TotalNumberOfFloors ?? 0).ToString(),
+                    Size = x.Size,
+                    Year = x.Year,
+                    BuildingType = x.BuildingType.Name,
+                    District = x.District.Name,
+                    PropertyType = x.PropertyType.Name
+                })
                 .OrderBy(x => x.Price)
                 .ToList();
         }
@@ -108,7 +118,16 @@ namespace RealEstates.Services
         {
             return this.db.RealEstateProperties
                 .Where(x => x.Price >= minPrice && x.Price <= maxPrice)
-                .Select(x => MapToPropertyViewModel(x))
+                .Select(x => new PropertyViewModel
+                {
+                    Price = x.Price,
+                    Floor = (x.Floor ?? 0).ToString() + "/" + (x.TotalNumberOfFloors ?? 0).ToString(),
+                    Size = x.Size,
+                    Year = x.Year,
+                    BuildingType = x.BuildingType.Name,
+                    District = x.District.Name,
+                    PropertyType = x.PropertyType.Name
+                })
                 .OrderBy(x => x.Price)
                 .ToList();
         }
@@ -192,7 +211,7 @@ namespace RealEstates.Services
             return new PropertyViewModel
             {
                 Price = x.Price,
-                Floor = (x.Floor ?? 0) + "/" + (x.TotalNumberOfFloors ?? 0),
+                Floor = (x.Floor ?? 0).ToString() + "/" + (x.TotalNumberOfFloors ?? 0).ToString(),
                 Size = x.Size,
                 Year = x.Year,
                 BuildingType = x.BuildingType.Name,
