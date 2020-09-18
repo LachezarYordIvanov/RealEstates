@@ -21,9 +21,6 @@ namespace RealEstates.Services
                 .Take(count)
                 .ToList();
         }
-
-        
-
         public IEnumerable<DistrictViewModel> GetTopDistrictsByNumberOfProperties(int count = 10)
         {
             return this.db.Districts
@@ -32,7 +29,6 @@ namespace RealEstates.Services
                 .Take(count)
                 .ToList();
         }
-
         private static DistrictViewModel MapToDistrictViewModel(District x)
         {
             return new DistrictViewModel

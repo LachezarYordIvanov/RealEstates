@@ -219,6 +219,5 @@ namespace RealEstates.Services
                 PropertyType = x.PropertyType.Name
             };
         }
-
     }
 }
