@@ -18,24 +18,24 @@ namespace RealEstates.ConsoleApplication
 
             IPropertiesService propertiesService = new PropertiesService(db);
 
-            Console.Write("Min. Price: ");
-            int minPrice = int.Parse(Console.ReadLine());
-            Console.Write("Max. Price: ");
-            int maxPrice = int.Parse(Console.ReadLine());
+            //Console.Write("Min. Price: ");
+            //int minPrice = int.Parse(Console.ReadLine());
+            //Console.Write("Max. Price: ");
+            //int maxPrice = int.Parse(Console.ReadLine());
 
-            var properties = propertiesService.SearchByPrice(minPrice, maxPrice);
-            foreach (var property in properties)
-            {
-                Console.WriteLine($"{property.District}, fl.{property.Floor}, {property.Size} m², {property.Year}, {property.Price} €, {property.PropertyType}, {property.BuildingType}");
-            }
-
-            //var propertiesServise = new PropertiesService(db);
-            //IDistrictsService districtsService = new DistrictsService(db);
-            //var districts = districtsService.GetTopDistrictsByAveragePrice();
-            //foreach (var district in districts)
+            //var properties = propertiesService.SearchByPrice(minPrice, maxPrice);
+            //foreach (var property in properties)
             //{
-            //    Console.WriteLine($"{district.Name} => Price:{district.AveragePrice:0.00} ({district.MinPrice}-{district.MinPrice}) => {district.PropertiesCount} properties");
+            //    Console.WriteLine($"{property.District}, fl.{property.Floor}, {property.Size} m², {property.Year}, {property.Price} €, {property.PropertyType}, {property.BuildingType}");
             //}
+
+            var propertiesServise = new PropertiesService(db);
+            IDistrictsService districtsService = new DistrictsService(db);
+            var districts = districtsService.GetTopDistrictsByAveragePrice(100);
+            foreach (var district in districts)
+            {
+                Console.WriteLine($"{district.Name} => Price:{district.AveragePrice:0.00} ({district.MinPrice}-{district.MinPrice}) => {district.PropertiesCount} properties");
+            }
         }
     }
 }
